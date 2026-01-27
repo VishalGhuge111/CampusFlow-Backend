@@ -8,6 +8,11 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
 dotenv.config();
+console.log("EMAIL_USER:", process.env.EMAIL_USER ? "SET" : "MISSING");
+console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "SET" : "MISSING");
+console.log("JWT_SECRET:", process.env.JWT_SECRET ? "SET" : "MISSING");
+console.log("MONGO_URI:", process.env.MONGO_URI ? "SET" : "MISSING");
+
 connectDB();
 
 const app = express();
