@@ -438,24 +438,9 @@ Content-Type: application/json
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 📞 Support & Contact
-
-For issues, questions, or suggestions:
-- **Email:** support@campusflow.com
-- **GitHub Issues:** [Report a bug](https://github.com/VishalGhuge111/CampusFlow-Backend/issues)
-- **Documentation:** [Full API Docs](https://campusflow-backend-9uxk.onrender.com)
-
----
-
 ## 🎉 Acknowledgments
 
-Built with ❤️ by the CampusFlow Team
+Built with ❤️ by ME
 - Express.js community
 - MongoDB documentation
 - Brevo API support
