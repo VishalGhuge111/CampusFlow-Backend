@@ -1,17 +1,13 @@
-import authRoutes from "./routes/authRoutes.js";
-import taskRoutes from "./routes/taskRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
-dotenv.config();
-console.log("EMAIL_USER:", process.env.EMAIL_USER ? "SET" : "MISSING");
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "SET" : "MISSING");
-console.log("JWT_SECRET:", process.env.JWT_SECRET ? "SET" : "MISSING");
-console.log("MONGO_URI:", process.env.MONGO_URI ? "SET" : "MISSING");
+import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 connectDB();
 
@@ -19,10 +15,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
-
 
 app.get("/", (req, res) => {
   res.send("API Running...");
