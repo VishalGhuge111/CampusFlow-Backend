@@ -1,44 +1,39 @@
-import nodemailer from "nodemailer";
-
-let transporter = null;
-
-const getTransporter = () => {
-  if (!transporter) {
-    console.log("Creating SMTP transporter...");
-    console.log("SMTP Config - Host:", process.env.SMTP_HOST, "Port:", process.env.SMTP_PORT);
-
-    transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: Number(process.env.SMTP_PORT) === 465,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      connectionTimeout: 5000,
-      socketTimeout: 5000,
-    });
-  }
-  return transporter;
-};
+import axios from "axios";
 
 const sendEmail = async (to, subject, text) => {
   try {
-    const mailer = getTransporter();
+    console.log("Sending email via Brevo API...");
+    
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "CampusFlow",
+          email: "skyplus049@gmail.com",
+        },
+        to: [
+          {
+            email: to,
+          },
+        ],
+        subject,
+        textContent: text,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    await mailer.verify();
-    console.log("SMTP Ready");
-
-    const info = await mailer.sendMail({
-      from: "CampusFlow <skyplus049@gmail.com>",
-      to,
-      subject,
-      text,
-    });
-
-    console.log("Email sent:", info.messageId);
+    console.log("Email sent successfully:", response.data.messageId);
+    return response.data;
   } catch (error) {
-    console.error("SEND EMAIL ERROR:", error);
+    console.error(
+      "SEND EMAIL ERROR:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };
